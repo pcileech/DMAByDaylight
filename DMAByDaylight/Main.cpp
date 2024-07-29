@@ -10,21 +10,6 @@ std::string ProcessName;
 
 void main()
 {
-
-	//std::string input;
-
-	//// 提示玩家输入
-	//std::cout << "请输入验证字符串：";
-
-	//// 获取玩家输入
-	//std::cin >> input;
-
-	//// 判断输入是否为 "langllangdekuailexiaowu"
-	//while (input != "langllangdekuailexiaowu") {
-	//	std::cout << "输入错误，请重新输入：";
-	//	std::cin >> input;
-	//}
-
 	bool gamefound = true;
 	ProcessName = "DeadByDaylight-Win64-Shipping.exe";
 	if (TargetProcess.Init("DeadByDaylight-Win64-Shipping.exe"))
@@ -41,21 +26,11 @@ void main()
 		printf("Failed to find game\n");
 		return;
 	}
-
-
-
-
 	TargetProcess.FixCr3();
-
 	uint64_t base = TargetProcess.GetBaseAddress(ProcessName);
 	uint64_t size = TargetProcess.GetBaseSize(ProcessName);
 	EngineInstance = std::make_shared<Engine>();
 	EngineInstance->Cache();
-
-	
-
-	//uint64_t persistentlevel = 0x190;
-	//persistentlevel = TargetProcess.Read<uint64_t>(gobjects + gameinstance);
 }
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
