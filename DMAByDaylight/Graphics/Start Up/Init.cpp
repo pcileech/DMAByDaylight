@@ -4,7 +4,9 @@
 #include "GUI.h"
 #include "Globals.h"
 #include "Camera.h"
+#include "DebugESP.h"
 #include "PlayerEsp.h"
+#include "GeneratorEsp.h"
 ID2D1Factory* Factory;
 IDWriteFactory* FontFactory;
 ID2D1HwndRenderTarget* RenderTarget;
@@ -92,12 +94,13 @@ std::shared_ptr<CheatFunction> Cache = std::make_shared<CheatFunction>(3000, [] 
 		EngineInstance = std::make_shared<Engine>();
 		return;
 	}
-	if (!EngineInstance->GetActorSize() <= 0 || EngineInstance->GetActorSize() >= 2000)
+	if (!EngineInstance->GetActorSize() <= 0 /*|| EngineInstance->GetActorSize() >= 20000*/)
 	{
 		EngineInstance = std::make_shared<Engine>();
 	}
 	EngineInstance->Cache();
 	});
+
 std::shared_ptr<CheatFunction> UpdateViewMatrix = std::make_shared<CheatFunction>(5, [] {
 	if (!EngineInstance)
 		return;
@@ -113,10 +116,14 @@ void RenderFrame()
 	Cache->Execute();
 	UpdateViewMatrix->Execute();
 	UpdatePlayers->Execute();
+	UpdateGenerators->Execute();
+	UpdateDebugs->Execute();
 	RenderTarget->BeginDraw();
 	RenderTarget->Clear(Colour(0, 0, 0, 255)); // clear over the last buffer
 	RenderTarget->SetTransform(D2D1::Matrix3x2F::Identity()); // set new transform
 	DrawPlayerEsp();
+	DrawGeneratorEsp();
+	DrawDebugEsp();
 	Render();
 	RenderTarget->EndDraw();
 }

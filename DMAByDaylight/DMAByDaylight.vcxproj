@@ -135,7 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Create</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\Config;$(SolutionDir)$(ProjectName)\Graphics\start up;$(SolutionDir)$(ProjectName)\Esp;$(SolutionDir)$(ProjectName)\Graphics\entities;$(SolutionDir)$(ProjectName)\Graphics\utility;$(SolutionDir)$(ProjectName)\Graphics;$(SolutionDir)$(ProjectName)\Security;$(SolutionDir)$(ProjectName)\SDK;$(SolutionDir)$(ProjectName)\Misc\Pch;$(SolutionDir)$(ProjectName)\Memory;$(SolutionDir)$(ProjectName)\;$(SolutionDir)$(ProjectName)\Misc;$(SolutionDir)$(ProjectName)\Sockets;$(SolutionDir)$(ProjectName)\ESP;$(SolutionDir)$(ProjectName)\json</AdditionalIncludeDirectories>
@@ -149,7 +149,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Config\ConfigUtilities.cpp" />
+    <ClCompile Include="DebugEsp.cpp" />
     <ClCompile Include="ESP\PlayerEsp.cpp" />
+    <ClCompile Include="GeneratorEsp.cpp" />
     <ClCompile Include="Graphics\Drawing.cpp" />
     <ClCompile Include="Graphics\Entities\Button.cpp" />
     <ClCompile Include="Graphics\Entities\ColourPicker.cpp" />
@@ -187,6 +189,9 @@
     <ClInclude Include="Config\ConfigUtilities.h" />
     <ClInclude Include="Config\Overlay.h" />
     <ClInclude Include="Config\PlayerConfig.h" />
+    <ClInclude Include="DebugAndDevConfig.h" />
+    <ClInclude Include="DebugEsp.h" />
+    <ClInclude Include="GeneratorEsp.h" />
     <ClInclude Include="ESP\PlayerEsp.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Graphics\Drawing.h" />
@@ -213,6 +218,7 @@
     <ClInclude Include="Graphics\Utility\Font.h" />
     <ClInclude Include="Memory\InputManager.h" />
     <ClInclude Include="Memory\Registry.h" />
+    <ClInclude Include="MiscConfig.h" />
     <ClInclude Include="Misc\CheatFunction.h" />
     <ClInclude Include="Memory\Memory.h" />
     <ClInclude Include="Misc\Input.h" />
@@ -223,6 +229,8 @@
     <ClInclude Include="SDK\ActorEntity.h" />
     <ClInclude Include="SDK\EngineStructs.h" />
     <ClInclude Include="Security\XorStr.h" />
+    <ClInclude Include="TokenConfig.h" />
+    <ClInclude Include="WindowConfig.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

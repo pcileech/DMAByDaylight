@@ -2,27 +2,51 @@
 #include "Engine.h"
 #include "ActorEntity.h"
 #include "Globals.h"
+#include "PlayerEsp.h"
+#include "GeneratorEsp.h"
 
 Engine::Engine()
 {
+	//GNameTable = TargetProcess.Read<uint64_t>(TargetProcess.GetBaseAddress(ProcessName) + GNames);
+	//printf("GNameTable: %p\n", GNameTable);
 	GWorld = TargetProcess.Read<uint64_t>(TargetProcess.GetBaseAddress(ProcessName) + GWorld);
-	printf("GWorld: %p\n", GWorld);
+	//printf("GWorld: %p\n", GWorld);
 	PersistentLevel = TargetProcess.Read<uint64_t>(GWorld + PersistentLevel);
-	printf("PersistentLevel: %p\n", PersistentLevel);
+	//printf("PersistentLevel: %p\n", PersistentLevel);
 	OwningGameInstance = TargetProcess.Read<uint64_t>(GWorld + OwningGameInstance);
-	printf("OwningGameInstance: %p\n", OwningGameInstance);
+	//printf("OwningGameInstance: %p\n", OwningGameInstance);
 	LocalPlayers = TargetProcess.Read<uint64_t>(OwningGameInstance + LocalPlayers);
-	printf("LocalPlayers: %p\n", LocalPlayers);
+	//printf("LocalPlayers: %p\n", LocalPlayers);
 	LocalPlayers = TargetProcess.Read<uint64_t>(LocalPlayers);
-	printf("LocalPlayers: %p\n", LocalPlayers);
+	//printf("LocalPlayers: %p\n", LocalPlayers);
 	PlayerController = TargetProcess.Read<uint64_t>(LocalPlayers + PlayerController);
-	printf("PlayerController: %p\n", PlayerController);
+	//printf("PlayerController: %p\n", PlayerController);
 	AcknowledgedPawn = TargetProcess.Read<uint64_t>(PlayerController + AcknowledgedPawn);
-	printf("AcknowledgedPawn: %p\n", AcknowledgedPawn);
+	//printf("AcknowledgedPawn: %p\n", AcknowledgedPawn);
 	CameraManager = TargetProcess.Read<uint64_t>(PlayerController + CameraManager);
-	printf("CameraManager: %p\n", CameraManager);
+	//printf("CameraManager: %p\n", CameraManager);
 	CameraEntry = TargetProcess.Read<CameraCacheEntry>(CameraManager + CameraCachePrivateOffset);
-	printf("CameraCacheEntry: %p\n", CameraEntry);
+	//printf("CameraCacheEntry: %p\n", CameraEntry);
+
+	//auto interaction_handler = TargetProcess.Read<uintptr_t>(AcknowledgedPawn + 0xb58);
+	//auto skillcheck = TargetProcess.Read<uintptr_t>(interaction_handler + 0x310);
+
+	//auto is_displayed = TargetProcess.Read<bool>(skillcheck + 0x151);
+	//auto current_progress = TargetProcess.Read<float>(skillcheck + 0x154);
+	//auto success_zone = TargetProcess.Read<float>(skillcheck + 0x198);
+
+	//std::cout << "is_displayed: " << is_displayed << std::endl;
+	//std::cout << "current_progress: " << current_progress << std::endl;
+	//std::cout << "success_zone: " << success_zone << std::endl;
+
+	//printf("\n\n");
+
+	//if (is_displayed && current_progress > success_zone)
+	//{
+	//	// press space
+	//	std::cout << "hit space!!!!!!!!!!!!!!!!!! " << std::endl;
+
+	//}
 
 }
 
@@ -32,9 +56,9 @@ void Engine::Cache()
 
 	OwningActor = TargetProcess.Read<uint64_t>(PersistentLevel + OwningActorOffset);
 	MaxPacket = TargetProcess.Read<uint32_t>(PersistentLevel + MaxPacketOffset);
-
-	printf("Actor Array: %p\n", OwningActor);
-	printf("Actor Array Size: %d\n", MaxPacket);
+	
+	//printf("Actor Array: %p\n", OwningActor);
+	//printf("Actor Array Size: %d\n", MaxPacket);
 
 	std::vector<uint64_t> entitylist;
 	entitylist.resize(MaxPacket);
@@ -43,7 +67,11 @@ void Engine::Cache()
 	for (size_t i = 0; i < MaxPacket; i++)
 	{
 		entitylist[i] = object_raw_ptr[i];
+
+		//------------------------------------------------
+
 	}
+
 	std::list<std::shared_ptr<ActorEntity>> actors;
 	auto handle = TargetProcess.CreateScatterHandle();
 	for (uint64_t address : entitylist)
@@ -66,11 +94,11 @@ void Engine::Cache()
 		entity->SetUp1(handle);
 	}
 	TargetProcess.ExecuteReadScatter(handle);
-	TargetProcess.CloseScatterHandle(handle);
+
 	std::vector<std::shared_ptr<ActorEntity>> playerlist;
 	for (std::shared_ptr<ActorEntity> entity : actors)
 	{
-		entity->SetUp2();
+		entity->SetUp2(handle);
 		if (entity->GetName() == LIT(L"Entity"))
 			continue;
 		if(entity->GetPosition() == Vector3::Zero())
@@ -78,6 +106,8 @@ void Engine::Cache()
 		playerlist.push_back(entity);
 	}
 	Actors = playerlist;
+	TargetProcess.ExecuteReadScatter(handle);
+	TargetProcess.CloseScatterHandle(handle);
 }
 void Engine::UpdatePlayers()
 {
@@ -89,6 +119,29 @@ void Engine::UpdatePlayers()
 	TargetProcess.ExecuteReadScatter(handle);
 	TargetProcess.CloseScatterHandle(handle);
 }
+
+void Engine::UpdateGenerators()
+{
+	//auto handle = TargetProcess.CreateScatterHandle();
+	//for (std::shared_ptr<ActorEntity> entity : Actors)
+	//{
+	//	entity->UpdateGenPosition(handle);
+	//}
+	//TargetProcess.ExecuteReadScatter(handle);
+	//TargetProcess.CloseScatterHandle(handle);
+}
+
+void Engine::UpdateDebugs()
+{
+	//auto handle = TargetProcess.CreateScatterHandle();
+	//for (std::shared_ptr<ActorEntity> entity : Actors)
+	//{
+	//	entity->UpdateGenPosition(handle);
+	//}
+	//TargetProcess.ExecuteReadScatter(handle);
+	//TargetProcess.CloseScatterHandle(handle);
+}
+
 void Engine::RefreshViewMatrix(VMMDLL_SCATTER_HANDLE handle)
 {
 	TargetProcess.AddScatterReadRequest(handle, CameraManager + CameraCachePrivateOffset,reinterpret_cast<void*>(&CameraEntry),sizeof(CameraCacheEntry));
