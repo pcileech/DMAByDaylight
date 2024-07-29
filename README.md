@@ -1,6 +1,17 @@
 # DMAByDaylight
 这是一个Fork已有的面向DMA开发的黎明杀机外部纯读辅助。仅供学习，不可商用。
 
+> [!WARNING]
+> 
+>This project is intended solely for educational and research purposes. Any commercial use of this project is strictly prohibited. The author is not responsible for any legal consequences arising from the commercial use of this project.
+> 
+
+> [!WARNING]
+> 
+>本项目仅供学习和研究使用，任何商业化用途均被严格禁止，包括但不限于二次封装发售，增加发卡系统，商业倒卖，包更新等。因商业化使用本项目而导致的任何法律后果，作者不承担任何责任。淘宝，闲鱼，京东等电商平台的有关商品和本人没有任何关系，也不存在授权行为，本软件遵守MIT Linence。
+> 
+
+
 ## Showcase
 ![image](https://github.com/user-attachments/assets/db509731-e929-4be0-82e8-e063dd49927e)
 <br>
