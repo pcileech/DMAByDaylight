@@ -9,9 +9,8 @@
 * Survivor ESP
 
 ## Showcase
-![image](https://github.com/user-attachments/assets/db509731-e929-4be0-82e8-e063dd49927e)
-<br>
-<img width="1415" alt="0f33b5dd4d31d3c020211dc0cea47c7" src="https://github.com/user-attachments/assets/70a9b997-c0a1-40b0-82a9-08251e5509fb">
+![espdbd](https://github.com/user-attachments/assets/8ead9694-d6c2-44be-a057-690b4ddd61a1)
+![espdbd1](https://github.com/user-attachments/assets/6e7e6ab2-507b-46b1-8c81-24090d493cfb)
 
 ## Instructions
 * [Installation Guide](./Instructions.md)
