@@ -7,6 +7,14 @@
 > 
 ## Features
 * Survivor ESP
+* Killer ESP
+* Totem ESP
+* Chest ESP
+* Exit Gate ESP
+* Basement ESP
+* Generator ESP
+* Hatch ESP
+* Bear Trap ESP
 
 ## Showcase
 ![espdbd](https://github.com/user-attachments/assets/8ead9694-d6c2-44be-a057-690b4ddd61a1)
